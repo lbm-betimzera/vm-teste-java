@@ -99,7 +99,7 @@ public class UsuarioServiceTest {
                         .header("Authorization", token))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("message").value("Usu�rio Cadastrado com sucesso")); // Verifica o campo 'nome' da resposta
+                .andExpect(jsonPath("message").value("Usu�rio Cadastrado com sucesso"));
     }
 
     /*

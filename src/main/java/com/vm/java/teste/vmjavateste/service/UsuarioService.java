@@ -3,6 +3,7 @@ package com.vm.java.teste.vmjavateste.service;
 import com.vm.java.teste.vmjavateste.service.enums.TipoEnvioEmail;
 import com.vm.java.teste.vmjavateste.service.exception.SenhaObrigatoriaException;
 import com.vm.java.teste.vmjavateste.service.exception.UsuarioExistenteException;
+import com.vm.java.teste.vmjavateste.service.exception.UsuarioGenericException;
 import com.vm.java.teste.vmjavateste.service.exception.UsuarioNotFoundException;
 import com.vm.java.teste.vmjavateste.service.mapper.UsuarioMapper;
 import com.vm.java.teste.vmjavateste.model.repository.IUsuarioRepository;
@@ -48,7 +49,7 @@ public class UsuarioService {
     private void validaUsuarioAntesSalvar(Usuario usuario) {
 
         if(Objects.isNull(usuario)){
-            throw new UsuarioNotFoundException("Usuario não pode estar vazio, preencha os campos obrigatorios ");
+            throw new UsuarioGenericException("usuario.campo.obrigatorio");
         }
 
         if (IUsuarioRepository.existsByEmail(usuario.getEmail()) ) {
@@ -62,7 +63,7 @@ public class UsuarioService {
 
     public UsuarioDTO editaUsuario(Long id, UsuarioDTO usuarioDTO) {
         Usuario usuario = IUsuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado com o id: " + id));
+                .orElseThrow(() -> new UsuarioNotFoundException("usuario.nao.encontrado"));
 
         usuario.setNome(usuarioDTO.getNome());
         usuario.setEmail(usuarioDTO.getEmail());

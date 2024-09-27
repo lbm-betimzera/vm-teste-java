@@ -4,10 +4,12 @@ import com.vm.java.teste.vmjavateste.controller.dto.ApiResponse;
 import com.vm.java.teste.vmjavateste.controller.dto.UsuarioFiltro;
 import com.vm.java.teste.vmjavateste.service.UsuarioService;
 import com.vm.java.teste.vmjavateste.controller.dto.UsuarioDTO;
+import com.vm.java.teste.vmjavateste.service.exception.UsuarioNotFoundException;
 import com.vm.java.teste.vmjavateste.util.MensagemUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,9 @@ public class UsuarioController {
         try {
             usuarioService.criaUsuario(usuarioDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(null, MensagemUtil.getMessage("usuario.criado.sucesso")));
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(null, e.getMessage()));
         } catch (Exception e) {
             String reason = ((ResponseStatusException) e).getReason();
             HttpStatusCode statusCode = ((ResponseStatusException) e).getStatusCode();
@@ -41,10 +46,13 @@ public class UsuarioController {
         try {
             usuarioService.editaUsuario(id, usuarioDTO);
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(null, MensagemUtil.getMessage("usuario.editado.sucesso")));
+        } catch (UsuarioNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(null, e.getMessage()));
         } catch (Exception e) {
-            String reason = ((ResponseStatusException) e).getReason();
-            HttpStatusCode statusCode = ((ResponseStatusException) e).getStatusCode();
-            return ResponseEntity.status(statusCode).body(new ApiResponse<>(null, reason));
+            String reason = e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(null, reason));
         }
     }
 
@@ -53,10 +61,13 @@ public class UsuarioController {
         try {
             UsuarioDTO usuario = usuarioService.buscaPorId(id);
             return ResponseEntity.ok(new ApiResponse<>(usuario));
+        } catch (UsuarioNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ApiResponse<>(null, e.getMessage()));
         } catch (Exception e) {
-            String reason = ((ResponseStatusException) e).getReason();
-            HttpStatusCode statusCode = ((ResponseStatusException) e).getStatusCode();
-            return ResponseEntity.status(statusCode).body(new ApiResponse<>(null, reason));
+            String reason = e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(null, reason));
         }
     }
 

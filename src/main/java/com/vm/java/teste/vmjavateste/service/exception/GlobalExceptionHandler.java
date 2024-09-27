@@ -1,8 +1,11 @@
 package com.vm.java.teste.vmjavateste.service.exception;
 
+import com.vm.java.teste.vmjavateste.controller.dto.ApiResponse;
 import com.vm.java.teste.vmjavateste.util.MensagemUtil;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -31,6 +34,25 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleSenhaObrigatoriaException() {
         String mensagemErro = MensagemUtil.getMessage("usuario.senha.obrigatoria", null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(mensagemErro));
+    }
+
+    @ExceptionHandler(UsuarioGenericException.class)
+    public ResponseEntity<ErrorResponse> handleUsuarioGenericException() {
+        String mensagemErro = MensagemUtil.getMessage("usuario.campo.obrigatorio", null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(mensagemErro));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<String>> DataIntegrityViolationException() {
+        String mensagemErro = MensagemUtil.getMessage("usuario.campo.obrigatorio", null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(null, mensagemErro));
+    }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse<String>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        String mensagemErro = MensagemUtil.getMessage("body.ausente", null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(null, mensagemErro));
     }
 
 }

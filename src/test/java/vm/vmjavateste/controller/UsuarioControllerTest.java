@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = VmJavaTesteApplication.class)
 @AutoConfigureMockMvc
-public class UsuarioServiceTest {
+public class UsuarioControllerTest {
 
     @MockBean
     private EmailService emailService;

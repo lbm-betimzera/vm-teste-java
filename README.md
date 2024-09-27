@@ -36,5 +36,28 @@ Nome banco: vm_teste
 Usuario: vm_teste
 Senha:vm_teste
 
+
+# Possibilidades para frontend
+
+Angular
+
+Prós:
+
+O Angular facilita o consumo de APIs RESTful também possui ferramentas como o HttpClient, que simplificam as requisições e o tratamento de respostas e tem uma estrutura de autenticação e gerenciamento de estados. O angular é um dos frameworks mais conhecidos atualmente e mais utilizados. Visando uma nova aplicação atualmente, iniciaria em Angular pela facilidade de encontrar profissionais qualificados e já estabelecidos no mercado.
+
+Segurança com o Angular como o gerenciamento de autenticação que é essencial para proteger a aplicação por um todo.
+
+Contras:
+
+Ele pode ser um pouco pesado, em aplicações que são pequenas e isso pode gerar alguns problemas de performance.
+
+Vue.js
+
+O Vue.js é mais leve em comparação ao Angular, o que pode deixar o carregamento mais rápido da aplicação usando APIs RESTful.
+
+Contras:
+
+Com base em algumas pesquisas que fiz os maiores contras do framework é que se não tiver uma boa organização é fácil de se perder conforme o projeto cresce. Ele também possui um ecossistema menor em comparação ao Angular que pode resultar em ter menos bibliotecas e isso pode causar um pouco de dificuldade na hora de buscar soluções para problemas específicos.
+
 # Contato
 Para mais informações, entre em contato  lucasbetim1213@gmail.com.
